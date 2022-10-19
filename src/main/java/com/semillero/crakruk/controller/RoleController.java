@@ -21,7 +21,16 @@ public class RoleController {
 
     @PostMapping
     public ResponseEntity<RoleDto> createRole(@Valid @RequestBody(required = true) RoleDto roleDto){
+        System.out.println("ENTRO AL METODO");
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createRole(roleDto));
+
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<RoleDto> createRoleget(@Valid @RequestBody(required = true) RoleDto roleDto){
+        System.out.println("ENTRO AL METODO");
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createRole(roleDto));
+
     }
 
     @DeleteMapping("/{id}")
