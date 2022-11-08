@@ -30,7 +30,7 @@ public class UserModel {
     private String email;
     private String password;
     private String photo;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="role")
     private Role role;
 
