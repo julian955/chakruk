@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/combos")
+@CrossOrigin(origins = "*")
 public class ComboController {
 
     @Autowired
