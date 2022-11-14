@@ -18,6 +18,7 @@ public class NewsMapper implements IMapper<News, NewsDto> {
                 .name(dto.getName())
                 .content(dto.getContent())
                 .image(dto.getImage())
+                .deleted(false)
                 .build();
     }
 

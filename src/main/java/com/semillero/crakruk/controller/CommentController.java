@@ -35,7 +35,7 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PatchMapping
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateComment(@PathVariable("id") long id,
                                          @Valid @RequestBody(required = true) CommentDto dto) throws EntityNotFoundException {
         try{

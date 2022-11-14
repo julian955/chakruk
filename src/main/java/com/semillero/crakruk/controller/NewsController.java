@@ -34,7 +34,7 @@ public class NewsController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PatchMapping
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateNews(@PathVariable("id") long id,
                                         @Valid @RequestBody(required = true) NewsDto newsUpdate) throws EntityNotFoundException {
         try{

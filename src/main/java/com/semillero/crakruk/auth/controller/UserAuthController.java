@@ -58,4 +58,15 @@ public class UserAuthController {
 
         return ResponseEntity.ok(userService.generateToken(authRequest));
     }
+
+     @PostMapping("/test")
+    public ResponseEntity<Void> test(@RequestHeader(value = "token") String token) throws Exception {
+
+         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+         System.out.println(token);
+         System.out.println(userService.getUserIdFromToken(token));
+         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+        return ResponseEntity.ok().build();
+    }
 }

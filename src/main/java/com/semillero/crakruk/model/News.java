@@ -32,7 +32,8 @@ public class News {
 
     private String image;
 
-    private Boolean deleted;
+    @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
+    private Boolean deleted = false;
 
     @CreationTimestamp
     private LocalDate created;

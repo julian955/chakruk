@@ -29,7 +29,10 @@ public class Combo {
     private String description;
     private Double price;
     private String image;
-    private Boolean deleted;
+
+
+    @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
+    private Boolean deleted = Boolean.FALSE;
 
     @CreationTimestamp
     private LocalDate created;

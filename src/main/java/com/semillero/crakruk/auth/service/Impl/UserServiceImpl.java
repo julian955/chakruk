@@ -137,6 +137,10 @@ public class UserServiceImpl implements IUserService {
         userRepository.deleteById(id);
     }
 
+    public String getUserIdFromToken(String token){
+       return jwtTokenUtils.extractUserName(token);
+    }
+
     private boolean emailExists(String email) {
 
         return userRepository.findByEmail(email) != null;

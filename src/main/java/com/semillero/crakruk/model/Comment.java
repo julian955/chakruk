@@ -26,9 +26,9 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name="user")
-    private UserModel user;
+    private UserModel user;*/
     private String body;
     private Boolean deleted;
 

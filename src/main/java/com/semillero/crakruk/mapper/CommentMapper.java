@@ -20,7 +20,7 @@ public class CommentMapper implements IMapper<Comment, CommentDto> {
     public Comment toEntity(CommentDto dto) {
         return Comment.builder()
                 .id(dto.getId())
-                .user(userRepository.findById(dto.getId()).get())
+           //     .user(userRepository.findById(dto.getId()).get())
                 .body(dto.getBody())
                 .deleted(false)
                 .build();
@@ -30,7 +30,7 @@ public class CommentMapper implements IMapper<Comment, CommentDto> {
     public Comment toEntity(Long id, CommentDto dto) {
         return Comment.builder()
                 .id(id)
-                .user(userRepository.findById(dto.getId()).get())
+           //     .user(userRepository.findById(dto.getId()).get())
                 .body(dto.getBody())
                 .build();
     }
@@ -39,7 +39,7 @@ public class CommentMapper implements IMapper<Comment, CommentDto> {
     public CommentDto toDto(Comment entity) {
         return CommentDto.builder()
                 .id(entity.getId())
-                .userId(entity.getUser().getId())
+           //     .userId(entity.getUser().getId())
                 .body(entity.getBody())
                 .build();
     }

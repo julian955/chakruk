@@ -6,6 +6,7 @@ import com.semillero.crakruk.auth.dto.UserDto;
 import com.semillero.crakruk.auth.dto.UserPatchDto;
 import com.semillero.crakruk.auth.dto.UserProfileDto;
 import com.semillero.crakruk.auth.model.UserModel;
+import com.semillero.crakruk.model.Role;
 import com.semillero.crakruk.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,8 @@ public class UserMapper {
         entity.setPhoto(dto.getPhoto());
         entity.setCreated(dto.getCreated());
         entity.setUpdated(dto.getUpdated());
+        entity.setDeleted(false);
+        entity.setRole(dto.getRole());
 
         return entity;
     }

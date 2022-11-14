@@ -1,17 +1,22 @@
 package com.semillero.crakruk.auth.model;
 
 
+import com.semillero.crakruk.model.Comment;
 import com.semillero.crakruk.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,19 +25,25 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
+@SQLDelete(sql = "UPDATE combos SET deleted = true WHERE id = ?")
+@Where(clause = "deleted = false")
 public class UserModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nick")
     private String user;
     private String email;
     private String password;
     private String photo;
     @ManyToOne
-    @JoinColumn(name="role")
+    @JoinColumn(name="roles")
     private Role role;
+
+    @OneToMany
+    List<Comment> comments = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDate created;
@@ -42,11 +53,11 @@ public class UserModel {
 
     private Boolean deleted;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    /*@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "user_role",
             joinColumns=@JoinColumn(name="users_id"),
-            inverseJoinColumns=@JoinColumn(name="roles_id"))
-    private Set<Role> roles = new HashSet<>();
+            inverseJoinColumns=@JoinColumn(name="role_id"))
+    private Set<Role> roles = new HashSet<>();*/
 
 
 }
