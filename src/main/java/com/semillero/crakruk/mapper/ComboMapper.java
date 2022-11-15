@@ -49,7 +49,7 @@ public class ComboMapper implements IMapper<Combo, ComboDto> {
         if(!(dto.getName() == null)){
             entity.setName(dto.getName());
         }
-        if(!(dto.getDescription() == null)){
+        if(!(dto.getDescription().isEmpty())){
             entity.setDescription(dto.getDescription());
         }
         if(!(dto.getImage() == null)){

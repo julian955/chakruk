@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 @Builder
@@ -20,7 +21,7 @@ public class ComboDto {
     private String name;
 
     @NotBlank(message = "{error.empty_field}")
-    private String description;
+    private List<String> description;
 
     @NotNull(message = "{error.empty_field}")
     private Double price;

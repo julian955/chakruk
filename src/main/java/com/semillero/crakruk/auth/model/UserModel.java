@@ -42,16 +42,14 @@ public class UserModel {
     @JoinColumn(name="roles")
     private Role role;
 
-    @OneToMany
-    List<Comment> comments = new ArrayList<>();
-
     @CreationTimestamp
     private LocalDate created;
 
     @UpdateTimestamp
     private LocalDate updated;
 
-    private Boolean deleted;
+    @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
+    private Boolean deleted = Boolean.FALSE;
 
     /*@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "user_role",

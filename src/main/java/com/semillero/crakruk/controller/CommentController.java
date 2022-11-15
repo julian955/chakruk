@@ -1,6 +1,7 @@
 package com.semillero.crakruk.controller;
 
-import com.semillero.crakruk.dto.ComboDto;
+import com.semillero.crakruk.auth.repository.UserRepository;
+import com.semillero.crakruk.auth.service.IUserService;
 import com.semillero.crakruk.dto.CommentDto;
 import com.semillero.crakruk.exeption.EntityNotFoundException;
 import com.semillero.crakruk.service.ICommentService;
@@ -18,10 +19,17 @@ public class CommentController {
 
     @Autowired
     ICommentService service;
+    @Autowired
+    IUserService userService;
+    @Autowired
+    UserRepository userRepository;
+
+
 
     @PostMapping
-    public ResponseEntity<CommentDto> createComment(@Valid @RequestBody(required = true)CommentDto dto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.createComment(dto));
+    public ResponseEntity<CommentDto> createComment(@RequestHeader(value = "token") String token, @Valid @RequestBody(required = true)CommentDto dto){
+        String userName = userService.getUserEmailFromToken(token);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createComment(dto,userName));
     }
 
     @GetMapping("/{id}")

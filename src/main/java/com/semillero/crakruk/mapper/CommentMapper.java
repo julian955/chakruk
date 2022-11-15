@@ -1,5 +1,6 @@
 package com.semillero.crakruk.mapper;
 
+import com.semillero.crakruk.auth.model.UserModel;
 import com.semillero.crakruk.auth.repository.UserRepository;
 import com.semillero.crakruk.dto.CommentDto;
 import com.semillero.crakruk.mapper.util.IMapper;
@@ -14,13 +15,21 @@ import static com.semillero.crakruk.mapper.util.MapperUtil.streamListNonNull;
 @Component
 public class CommentMapper implements IMapper<Comment, CommentDto> {
 
-    @Autowired
-    UserRepository userRepository;
+
+
+    public Comment toEntity(CommentDto dto, UserModel user) {
+        return Comment.builder()
+                .id(dto.getId())
+                .user(user)
+                .body(dto.getBody())
+                .deleted(false)
+                .build();
+    }
+
     @Override
     public Comment toEntity(CommentDto dto) {
         return Comment.builder()
                 .id(dto.getId())
-           //     .user(userRepository.findById(dto.getId()).get())
                 .body(dto.getBody())
                 .deleted(false)
                 .build();
@@ -30,7 +39,6 @@ public class CommentMapper implements IMapper<Comment, CommentDto> {
     public Comment toEntity(Long id, CommentDto dto) {
         return Comment.builder()
                 .id(id)
-           //     .user(userRepository.findById(dto.getId()).get())
                 .body(dto.getBody())
                 .build();
     }
@@ -39,7 +47,7 @@ public class CommentMapper implements IMapper<Comment, CommentDto> {
     public CommentDto toDto(Comment entity) {
         return CommentDto.builder()
                 .id(entity.getId())
-           //     .userId(entity.getUser().getId())
+                .userName(entity.getUser().getUser())
                 .body(entity.getBody())
                 .build();
     }

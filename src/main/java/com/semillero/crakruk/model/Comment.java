@@ -26,11 +26,13 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    /*@ManyToOne
-    @JoinColumn(name="user")
-    private UserModel user;*/
+    @ManyToOne
+    @JoinColumn(name="users")
+    private UserModel user;
     private String body;
-    private Boolean deleted;
+
+    @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
+    private Boolean deleted = Boolean.FALSE;
 
     @CreationTimestamp
     private LocalDate created;

@@ -1,5 +1,7 @@
 package com.semillero.crakruk.service.imp;
 
+import com.semillero.crakruk.auth.model.UserModel;
+import com.semillero.crakruk.auth.repository.UserRepository;
 import com.semillero.crakruk.dto.CommentDto;
 import com.semillero.crakruk.exeption.EntityNotFoundException;
 import com.semillero.crakruk.mapper.CommentMapper;
@@ -18,12 +20,14 @@ import java.util.Optional;
 public class CommentService implements ICommentService {
     private final CommentRepository commentRepository;
     private final CommentMapper mapper;
+    private final UserRepository userRepository;
 
 
     @Override
     @Transactional
-    public CommentDto createComment(CommentDto dto) {
-        Comment comment = mapper.toEntity(dto);
+    public CommentDto createComment(CommentDto dto , String userName) {
+        UserModel user = userRepository.findByEmailEquals(userName);
+        Comment comment = mapper.toEntity(dto,user);
         commentRepository.save(comment);
         return mapper.toDto(comment);
     }
