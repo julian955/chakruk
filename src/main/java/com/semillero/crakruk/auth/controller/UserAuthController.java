@@ -59,4 +59,5 @@ public class UserAuthController {
 
         return ResponseEntity.ok(userService.generateToken(authRequest));
     }
+
 }

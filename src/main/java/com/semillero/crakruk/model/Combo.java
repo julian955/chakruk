@@ -11,6 +11,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -26,10 +27,13 @@ public class Combo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String description;
+    private List<String> description;
     private Double price;
     private String image;
-    private Boolean deleted;
+
+
+    @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
+    private Boolean deleted = Boolean.FALSE;
 
     @CreationTimestamp
     private LocalDate created;

@@ -11,6 +11,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -26,13 +27,26 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String title;
 
-    private String content;
+    private List<String> body;
 
     private String image;
 
-    private Boolean deleted;
+    private String date;
+
+    private String place;
+
+    private String location;
+
+    private String time;
+
+    private Double price;
+
+    private String twich;
+
+    @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
+    private Boolean deleted = false;
 
     @CreationTimestamp
     private LocalDate created;

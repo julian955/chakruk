@@ -7,7 +7,7 @@ import com.semillero.crakruk.dto.CommentDto;
 import java.util.List;
 
 public interface ICommentService {
-    CommentDto createComment(CommentDto dto);
+    CommentDto createComment(CommentDto dto , String userName);
 
     CommentDto getById(Long id);
 

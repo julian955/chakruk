@@ -15,8 +15,7 @@ public class CommentDto {
 
     private Long id;
 
-    @NotNull(message = "{error.empty_field}")
-    private Long userId;
+    private String userName;
 
     @NotNull(message = "{error.empty_field}")
     private String body;

@@ -44,6 +44,14 @@ public class JwtUtils {
         return decodedJWT.getClaim("roles").asArray(String.class);
     }
 
+
+    public String extractUserName(String token) {
+        Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = verifier.verify(token);
+        return decodedJWT.getClaim("sub").asString();
+    }
+
     public static Date toMinutes(int minutes) {
         return new Date(System.currentTimeMillis() * 1000 * 60 * minutes);
     }

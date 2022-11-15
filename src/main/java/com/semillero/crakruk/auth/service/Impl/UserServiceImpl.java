@@ -94,7 +94,7 @@ public class UserServiceImpl implements IUserService {
         jwt = authorizationHeader.substring(7);
         email = JwtUtils.decodeToken(jwt);
 
-        UserModel userModel = userRepository.findByEmail(email);
+        UserModel userModel = userRepository.findByEmailEquals(email);
         UserProfileDto dto = userMapper.userModel2UserProfileDto(userModel);
 
         return dto;
@@ -137,9 +137,13 @@ public class UserServiceImpl implements IUserService {
         userRepository.deleteById(id);
     }
 
+    public String getUserEmailFromToken(String token){
+       return jwtTokenUtils.extractUserName(token);
+    }
+
     private boolean emailExists(String email) {
 
-        return userRepository.findByEmail(email) != null;
+        return userRepository.findByEmailEquals(email) != null;
 
     }
 }

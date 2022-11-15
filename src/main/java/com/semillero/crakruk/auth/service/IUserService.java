@@ -18,5 +18,7 @@ public interface IUserService {
 
     UserPatchDto updateUser(Long id, UserPatchDto userDto);
 
+    String getUserEmailFromToken(String token);
+
     void deleteUser(Long id);
 }
