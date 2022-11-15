@@ -16,6 +16,7 @@ public class RoleMapper implements IMapper<Role, RoleDto> {
         return Role.builder()
                 .id(dto.getId())
                 .name(dto.getName())
+                .deleted(false)
                 .build();
     }
 
