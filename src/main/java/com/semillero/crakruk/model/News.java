@@ -29,6 +29,7 @@ public class News {
 
     private String title;
 
+    @ElementCollection(targetClass=String.class)
     private List<String> body;
 
     private String image;

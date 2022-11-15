@@ -27,6 +27,7 @@ public class Combo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @ElementCollection(targetClass=String.class)
     private List<String> description;
     private Double price;
     private String image;
