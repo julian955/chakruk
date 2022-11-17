@@ -17,10 +17,10 @@ public class ComboDto {
 
     private Long id;
 
-    @NotBlank(message = "{error.empty_field}")
+    @NotNull(message = "{error.empty_field}")
     private String name;
 
-    @NotBlank(message = "{error.empty_field}")
+    @NotNull(message = "{error.empty_field}")
     private List<String> description;
 
     @NotNull(message = "{error.empty_field}")
