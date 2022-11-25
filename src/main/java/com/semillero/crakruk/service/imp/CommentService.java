@@ -20,13 +20,12 @@ import java.util.Optional;
 public class CommentService implements ICommentService {
     private final CommentRepository commentRepository;
     private final CommentMapper mapper;
-    private final UserRepository userRepository;
+
 
 
     @Override
     @Transactional
-    public CommentDto createComment(CommentDto dto , String userName) {
-        UserModel user = userRepository.findByEmailEquals(userName);
+    public CommentDto createComment(CommentDto dto , UserModel user) {
         Comment comment = mapper.toEntity(dto,user);
         commentRepository.save(comment);
         return mapper.toDto(comment);

@@ -137,8 +137,32 @@ public class UserServiceImpl implements IUserService {
         userRepository.deleteById(id);
     }
 
-    public String getUserEmailFromToken(String token){
-       return jwtTokenUtils.extractUserName(token);
+    @Override
+    public String getUserName(HttpServletRequest request){
+        String email = null;
+        String jwt = null;
+
+        String authorizationHeader = request.getHeader("Authorization");
+        jwt = authorizationHeader.substring(7);
+        email = JwtUtils.decodeToken(jwt);
+
+        UserModel userModel = userRepository.findByEmailEquals(email);
+
+        return userModel.getUser();
+    }
+
+    @Override
+    public UserModel getUser(HttpServletRequest request){
+        String email = null;
+        String jwt = null;
+
+        String authorizationHeader = request.getHeader("Authorization");
+        jwt = authorizationHeader.substring(7);
+        email = JwtUtils.decodeToken(jwt);
+
+        UserModel userModel = userRepository.findByEmailEquals(email);
+
+        return userModel;
     }
 
     private boolean emailExists(String email) {

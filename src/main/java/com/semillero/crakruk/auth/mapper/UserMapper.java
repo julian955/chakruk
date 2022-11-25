@@ -24,12 +24,11 @@ public class UserMapper {
 
         UserModel entity = new UserModel();
         entity.setUser(dto.getUser());
-        entity.setId(dto.getId());
         entity.setPassword(dto.getPassword());
         entity.setEmail(dto.getEmail());
         entity.setPhoto(dto.getPhoto());
-        entity.setCreated(dto.getCreated());
-        entity.setUpdated(dto.getUpdated());
+        entity.setName(dto.getName());
+        entity.setLastName(dto.getLastName());
         entity.setDeleted(false);
         entity.setRole(dto.getRole());
 
@@ -44,6 +43,8 @@ public class UserMapper {
         dto.setPassword(entity.getPassword());
         dto.setEmail(entity.getEmail());
         dto.setPhoto(entity.getPhoto());
+        dto.setName(entity.getName());
+        dto.setLastName(entity.getLastName());
         dto.setCreated(entity.getCreated());
         dto.setUpdated(entity.getUpdated());
         dto.setRole(entity.getRole());
@@ -77,10 +78,12 @@ public class UserMapper {
 
     public UserProfileDto userModel2UserProfileDto(UserModel userModel) {
         UserProfileDto userProfileDto = new UserProfileDto();
-
         userProfileDto.setEmail(userModel.getEmail());
         userProfileDto.setUser(userModel.getUser());
         userProfileDto.setPhoto(userModel.getPhoto());
+        userProfileDto.setName(userModel.getName());
+        userProfileDto.setLastName(userModel.getLastName());
+        userProfileDto.setRole(userModel.getRole().getName());
         return userProfileDto;
 
     }

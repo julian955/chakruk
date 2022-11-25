@@ -22,6 +22,9 @@ public class UserDto {
     @Email
     private String email;
 
+    private String name;
+    private String lastName;
+
     private String photo;
 
     @NotNull(message = "{error.empty_field}")

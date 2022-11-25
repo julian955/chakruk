@@ -35,6 +35,8 @@ public class UserModel {
 
     @Column(name = "nick")
     private String user;
+    private String name;
+    private String lastName;
     private String email;
     private String password;
     private String photo;

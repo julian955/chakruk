@@ -2,6 +2,7 @@ package com.semillero.crakruk.auth.service;
 
 
 import com.semillero.crakruk.auth.dto.*;
+import com.semillero.crakruk.auth.model.UserModel;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -18,7 +19,9 @@ public interface IUserService {
 
     UserPatchDto updateUser(Long id, UserPatchDto userDto);
 
-    String getUserEmailFromToken(String token);
+    String getUserName(HttpServletRequest request);
+
+    public UserModel getUser(HttpServletRequest request);
 
     void deleteUser(Long id);
 }

@@ -1,5 +1,6 @@
 package com.semillero.crakruk.controller;
 
+import com.semillero.crakruk.auth.model.UserModel;
 import com.semillero.crakruk.auth.repository.UserRepository;
 import com.semillero.crakruk.auth.service.IUserService;
 import com.semillero.crakruk.dto.CommentDto;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -28,9 +30,9 @@ public class CommentController {
 
 
     @PostMapping
-    public ResponseEntity<CommentDto> createComment(@RequestHeader(value = "token") String token, @Valid @RequestBody(required = true)CommentDto dto){
-        String userName = userService.getUserEmailFromToken(token);
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.createComment(dto,userName));
+    public ResponseEntity<CommentDto> createComment(HttpServletRequest request, @Valid @RequestBody(required = true)CommentDto dto){
+        UserModel user = userService.getUser(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createComment(dto,user));
     }
 
     @GetMapping("/{id}")

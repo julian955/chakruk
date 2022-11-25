@@ -42,7 +42,7 @@ public class News {
 
     private String time;
 
-    private Double price;
+    private String price;
 
     private String twich;
 

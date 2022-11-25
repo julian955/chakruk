@@ -12,4 +12,8 @@ public class UserProfileDto {
     @Email
     private String email;
     private String photo;
+    private String name;
+    private String lastName;
+    private String role;
+
 }
