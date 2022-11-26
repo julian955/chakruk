@@ -111,18 +111,17 @@ public class UserServiceImpl implements IUserService {
 
         return null;
     }
-    @Override
-    @Transactional
-    public UserPatchDto updateUser(Long id, UserPatchDto updates) {
-        return userRepository.findById(id).map(userModel -> {
-            userModel.setUser(userModel.getUser());
-            userModel.setPhoto(updates.getPhoto());
-            userModel = userRepository.save(userModel);
-            return userMapper.userModel2UserPatchDto(userModel);
-        }).orElseThrow(
-                () -> new UserNotFoundException(message.getMessage("error.user_not_found", null, Locale.US))
-        );
 
+    @Transactional
+    @Override
+    public UserProfileDto updateUser(HttpServletRequest request, UserPatchDto updates) {
+        if (userExists(updates.getUser())){
+            throw new UserAlreadyExistsException(message.getMessage("error.user_exist", null, Locale.US));
+        }
+        UserModel userModel = this.getUser(request);
+        userMapper.update(userModel,updates);
+        userRepository.save(userModel);
+        return userMapper.userModel2UserProfileDto(userModel);
     }
 
     @Override
@@ -168,6 +167,12 @@ public class UserServiceImpl implements IUserService {
     private boolean emailExists(String email) {
 
         return userRepository.findByEmailEquals(email) != null;
+
+    }
+
+    private boolean userExists(String user) {
+
+        return userRepository.findByUserEquals(user)!= null;
 
     }
 }

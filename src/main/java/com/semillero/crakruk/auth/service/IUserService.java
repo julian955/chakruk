@@ -17,7 +17,7 @@ public interface IUserService {
 
     List<UserBasicDto> returnList();
 
-    UserPatchDto updateUser(Long id, UserPatchDto userDto);
+    UserProfileDto updateUser(HttpServletRequest request, UserPatchDto updates);
 
     String getUserName(HttpServletRequest request);
 

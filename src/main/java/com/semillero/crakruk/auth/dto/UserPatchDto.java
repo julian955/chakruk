@@ -1,19 +1,17 @@
 package com.semillero.crakruk.auth.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserPatchDto {
-    @NotEmpty(message = "{error.empty_field}")
+
     private String user;
-    @NotEmpty(message = "{error.empty_field}")
     private String photo;
+    private String name;
+    private String lastName;
+
 }

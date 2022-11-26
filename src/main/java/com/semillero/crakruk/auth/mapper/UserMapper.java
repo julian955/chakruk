@@ -88,8 +88,21 @@ public class UserMapper {
 
     }
 
-    public UserPatchDto userModel2UserPatchDto(UserModel userModel){
-        return new UserPatchDto(userModel.getUser(), userModel.getPhoto());
+    public void update(UserModel entity, UserPatchDto dto){
+        if (!(dto.getUser() == null)){
+            entity.setUser(dto.getUser());
+        }
+        if (!(dto.getPhoto() == null)){
+            entity.setPhoto(dto.getPhoto());
+        }
+        if (!(dto.getName() == null)){
+            entity.setName(dto.getName());
+        }
+        if (!(dto.getLastName() == null)){
+            entity.setLastName(dto.getLastName());
+        }
     }
+
+
 
 }

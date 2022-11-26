@@ -10,6 +10,8 @@ public interface UserRepository extends JpaRepository<UserModel,Long> {
 
     UserModel findByEmailEquals(String email);
 
+    UserModel findByUserEquals(String user);
+
 
 
 }
