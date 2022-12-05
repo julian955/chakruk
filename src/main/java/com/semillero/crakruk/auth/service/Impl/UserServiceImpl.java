@@ -70,6 +70,9 @@ public class UserServiceImpl implements IUserService {
         if (emailExists(userDto.getEmail())) {
             throw new UserAlreadyExistsException(message.getMessage("error.account_exists", null, Locale.US));
         }
+        if (userExists(userDto.getUser())){
+            throw new UserAlreadyExistsException(message.getMessage("error.user_exist", null, Locale.US));
+        }
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         UserModel entity = userMapper.userDTO2Entity(userDto);
         entity.setRole(roleRepository.findByName("USER").get());
@@ -115,7 +118,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     @Override
     public UserProfileDto updateUser(HttpServletRequest request, UserPatchDto updates) {
-        if (userExists(updates.getUser())){
+        if (userExists(updates.getUser()) && (!getUserName(request).equals(updates.getUser()))){
             throw new UserAlreadyExistsException(message.getMessage("error.user_exist", null, Locale.US));
         }
         UserModel userModel = this.getUser(request);

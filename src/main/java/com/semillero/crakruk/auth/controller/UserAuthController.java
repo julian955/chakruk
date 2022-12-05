@@ -53,12 +53,12 @@ public class UserAuthController {
     }
 
     @PutMapping
-    public ResponseEntity<UserProfileDto> updateUser(HttpServletRequest request, @Valid @RequestBody UserPatchDto updates){
+    public ResponseEntity<?> updateUser(HttpServletRequest request, @Valid @RequestBody UserPatchDto updates){
         try {
             UserProfileDto response = userService.updateUser(request,updates);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
