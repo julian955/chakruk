@@ -8,6 +8,7 @@ import com.semillero.crakruk.auth.repository.UserRepository;
 import com.semillero.crakruk.auth.service.IUserService;
 import com.semillero.crakruk.auth.service.JwtUtils;
 import com.semillero.crakruk.exeption.NullListException;
+import com.semillero.crakruk.exeption.PasswordException;
 import com.semillero.crakruk.exeption.UserAlreadyExistsException;
 import com.semillero.crakruk.exeption.UserNotFoundException;
 import com.semillero.crakruk.repository.RoleRepository;
@@ -153,6 +154,7 @@ public class UserServiceImpl implements IUserService {
         return userModel.getUser();
     }
 
+
     @Override
     public UserModel getUser(HttpServletRequest request){
         String email = null;
@@ -176,6 +178,22 @@ public class UserServiceImpl implements IUserService {
     private boolean userExists(String user) {
 
         return userRepository.findByUserEquals(user)!= null;
+
+    }
+
+    @Override
+    public void resetPassword(HttpServletRequest request,ResetPasswordDto resetPass ){
+
+        UserModel user = getUser(request);
+        if (!(passwordEncoder.matches(resetPass.getOldPass(),user.getPassword()))){
+            throw new PasswordException(message.getMessage("error.wrong_password", null, Locale.US));
+        }
+        if (!(resetPass.getNewPass().equals(resetPass.getConfirmNewPass()))){
+            throw new PasswordException(message.getMessage("error.match_password", null, Locale.US));
+        }
+        user.setPassword(passwordEncoder.encode(resetPass.getNewPass()));
+        userRepository.save(user);
+
 
     }
 }

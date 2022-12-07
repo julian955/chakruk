@@ -21,7 +21,9 @@ public interface IUserService {
 
     String getUserName(HttpServletRequest request);
 
-    public UserModel getUser(HttpServletRequest request);
+    UserModel getUser(HttpServletRequest request);
 
     void deleteUser(Long id);
+
+    void resetPassword(HttpServletRequest request,ResetPasswordDto resetPass);
 }

@@ -70,4 +70,16 @@ public class UserAuthController {
         return ResponseEntity.ok(userService.generateToken(authRequest));
     }
 
+
+    @PostMapping("/reset/password")
+    public ResponseEntity<?> resetPassword(HttpServletRequest request, @Valid @RequestBody ResetPasswordDto passwordDto){
+        try {
+            userService.resetPassword(request,passwordDto);
+            return ResponseEntity.status(HttpStatus.OK).body("The password was changed successfully!");
+
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
 }

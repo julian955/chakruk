@@ -22,17 +22,13 @@ public class CommentController {
 
     @Autowired
     ICommentService service;
-    @Autowired
-    IUserService userService;
-    @Autowired
-    UserRepository userRepository;
+
 
 
 
     @PostMapping
     public ResponseEntity<CommentDto> createComment(HttpServletRequest request, @Valid @RequestBody(required = true)CommentDto dto){
-        UserModel user = userService.getUser(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.createComment(dto,user));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createComment(dto,request));
     }
 
     @GetMapping("/{id}")

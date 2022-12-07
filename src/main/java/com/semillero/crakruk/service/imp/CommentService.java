@@ -2,6 +2,7 @@ package com.semillero.crakruk.service.imp;
 
 import com.semillero.crakruk.auth.model.UserModel;
 import com.semillero.crakruk.auth.repository.UserRepository;
+import com.semillero.crakruk.auth.service.IUserService;
 import com.semillero.crakruk.dto.CommentDto;
 import com.semillero.crakruk.exeption.EntityNotFoundException;
 import com.semillero.crakruk.mapper.CommentMapper;
@@ -11,6 +12,7 @@ import com.semillero.crakruk.service.ICommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -20,12 +22,15 @@ import java.util.Optional;
 public class CommentService implements ICommentService {
     private final CommentRepository commentRepository;
     private final CommentMapper mapper;
+    private final IUserService userService;
 
 
 
     @Override
     @Transactional
-    public CommentDto createComment(CommentDto dto , UserModel user) {
+    public CommentDto createComment(CommentDto dto , HttpServletRequest request) {
+
+        UserModel user = userService.getUser(request);
         Comment comment = mapper.toEntity(dto,user);
         commentRepository.save(comment);
         return mapper.toDto(comment);
