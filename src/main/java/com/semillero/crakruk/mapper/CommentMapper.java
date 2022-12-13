@@ -8,6 +8,7 @@ import com.semillero.crakruk.model.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.semillero.crakruk.mapper.util.MapperUtil.streamListNonNull;
@@ -16,10 +17,13 @@ import static com.semillero.crakruk.mapper.util.MapperUtil.streamListNonNull;
 public class CommentMapper implements IMapper<Comment, CommentDto> {
 
 
+    @Autowired
+    ReplyMapper mapper;
 
     public Comment toEntity(CommentDto dto, UserModel user) {
         return Comment.builder()
                 .id(dto.getId())
+                .title(dto.getTitle())
                 .user(user)
                 .body(dto.getBody())
                 .deleted(false)
@@ -30,6 +34,7 @@ public class CommentMapper implements IMapper<Comment, CommentDto> {
     public Comment toEntity(CommentDto dto) {
         return Comment.builder()
                 .id(dto.getId())
+                .title(dto.getTitle())
                 .body(dto.getBody())
                 .deleted(false)
                 .build();
@@ -39,6 +44,7 @@ public class CommentMapper implements IMapper<Comment, CommentDto> {
     public Comment toEntity(Long id, CommentDto dto) {
         return Comment.builder()
                 .id(id)
+                .title(dto.getTitle())
                 .body(dto.getBody())
                 .build();
     }
@@ -47,8 +53,12 @@ public class CommentMapper implements IMapper<Comment, CommentDto> {
     public CommentDto toDto(Comment entity) {
         return CommentDto.builder()
                 .id(entity.getId())
+                .title(entity.getTitle())
                 .userName(entity.getUser().getUser())
+                .photo(entity.getUser().getPhoto())
                 .body(entity.getBody())
+                .reply(mapper.toDtoList(entity.getReply()))
+                .created(entity.getUpdated())
                 .build();
     }
 

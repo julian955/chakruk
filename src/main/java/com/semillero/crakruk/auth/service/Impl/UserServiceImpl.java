@@ -196,4 +196,9 @@ public class UserServiceImpl implements IUserService {
 
 
     }
+
+    @Override
+    public UserModel getUserByUserName(String userName){
+        return userRepository.findByUserEquals(userName);
+    }
 }

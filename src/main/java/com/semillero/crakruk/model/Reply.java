@@ -12,31 +12,25 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "comments")
-@SQLDelete(sql = "UPDATE comments SET deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE reply SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
-public class Comment {
-
+public class Reply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
     @ManyToOne
     @JoinColumn(name="users")
     private UserModel user;
     private String body;
 
-    @OneToMany
-    private List<Reply> reply = new ArrayList<>();
+    @OneToOne
+    private UserModel receiver;
 
     @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
     private Boolean deleted = Boolean.FALSE;
@@ -48,7 +42,5 @@ public class Comment {
     private LocalDate updated;
 
 
-    public void addReply(Reply reply){
-        this.reply.add(reply);
-    }
+
 }

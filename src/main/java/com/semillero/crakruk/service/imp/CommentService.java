@@ -4,6 +4,7 @@ import com.semillero.crakruk.auth.model.UserModel;
 import com.semillero.crakruk.auth.repository.UserRepository;
 import com.semillero.crakruk.auth.service.IUserService;
 import com.semillero.crakruk.dto.CommentDto;
+import com.semillero.crakruk.dto.ReplyDto;
 import com.semillero.crakruk.exeption.EntityNotFoundException;
 import com.semillero.crakruk.mapper.CommentMapper;
 import com.semillero.crakruk.model.Comment;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +70,9 @@ public class CommentService implements ICommentService {
 
     @Override
     public List<CommentDto> getAllComments() {
-        return mapper.toDtoList(commentRepository.findAll());
+        List<CommentDto> dtoList = mapper.toDtoList(commentRepository.findAll());
+        dtoList.forEach(x -> Collections.sort(x.getReply(), Comparator.comparing(ReplyDto::getCreated)));
+        Collections.sort(dtoList, Comparator.comparing(CommentDto::getCreated).reversed());
+        return dtoList;
     }
 }
