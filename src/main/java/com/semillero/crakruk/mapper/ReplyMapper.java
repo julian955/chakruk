@@ -39,6 +39,7 @@ public class ReplyMapper implements IMapper<Reply, ReplyDto> {
                 .photo(entity.getUser().getPhoto())
                 .userReceiver(entity.getReceiver().getUser())
                 .body(entity.getBody())
+                .likes(entity.getLike().size())
                 .created(entity.getUpdated())
                 .build();
     }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +37,7 @@ public class ReplyService implements IReplyService {
         UserModel userReceiver = userService.getUserByUserName(dto.getUserReceiver());
         Reply reply = mapper.toEntity(dto,user);
         reply.setReceiver(userReceiver);
+        reply.setLike(new ArrayList<>());
         repository.save(reply);
         comment.addReply(reply);
         commentRepository.save(comment);
@@ -75,5 +77,15 @@ public class ReplyService implements IReplyService {
     @Override
     public List<ReplyDto> getAllReply() {
         return mapper.toDtoList(repository.findAll());
+    }
+
+    @Override
+    public void likeReply (Long id,HttpServletRequest request){
+        UserModel user = userService.getUser(request);
+        Reply reply = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Reply", "id", id));
+        if (!(reply.getLike().contains(user))){
+            reply.addLike(user);
+        }
+        repository.save(reply);
     }
 }

@@ -51,12 +51,14 @@ public class CommentMapper implements IMapper<Comment, CommentDto> {
 
     @Override
     public CommentDto toDto(Comment entity) {
+
         return CommentDto.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .userName(entity.getUser().getUser())
                 .photo(entity.getUser().getPhoto())
                 .body(entity.getBody())
+                .likes(entity.getLike().size())
                 .reply(mapper.toDtoList(entity.getReply()))
                 .created(entity.getUpdated())
                 .build();

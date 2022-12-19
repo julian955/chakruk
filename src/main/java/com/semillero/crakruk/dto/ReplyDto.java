@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -26,5 +26,7 @@ public class ReplyDto {
     @NotNull(message = "{error.empty_field}")
     private String body;
 
-    private LocalDate created;
+    private Integer likes;
+
+    private LocalDateTime created;
 }

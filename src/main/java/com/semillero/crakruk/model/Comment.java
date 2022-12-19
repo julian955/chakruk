@@ -12,6 +12,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,17 +39,32 @@ public class Comment {
     @OneToMany
     private List<Reply> reply = new ArrayList<>();
 
+    @ManyToMany
+    private List<UserModel> like;
+
+
+
     @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
     private Boolean deleted = Boolean.FALSE;
 
     @CreationTimestamp
-    private LocalDate created;
+    private LocalDateTime created;
 
     @UpdateTimestamp
-    private LocalDate updated;
+    private LocalDateTime updated;
 
 
     public void addReply(Reply reply){
         this.reply.add(reply);
     }
+
+    public void addLike(UserModel user){this.like.add(user);}
+
+
+
+
+
+
+
+
 }

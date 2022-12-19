@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
@@ -35,6 +32,7 @@ public class CommentService implements ICommentService {
 
         UserModel user = userService.getUser(request);
         Comment comment = mapper.toEntity(dto,user);
+        comment.setLike(new ArrayList<>());
         commentRepository.save(comment);
         return mapper.toDto(comment);
     }
@@ -74,5 +72,15 @@ public class CommentService implements ICommentService {
         dtoList.forEach(x -> Collections.sort(x.getReply(), Comparator.comparing(ReplyDto::getCreated)));
         Collections.sort(dtoList, Comparator.comparing(CommentDto::getCreated).reversed());
         return dtoList;
+    }
+
+    @Override
+    public void likeComment(Long id,HttpServletRequest request){
+        UserModel user = userService.getUser(request);
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Comment", "id", id));
+        if (!(comment.getLike().contains(user))){
+            comment.addLike(user);
+        }
+        commentRepository.save(comment);
     }
 }

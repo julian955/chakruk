@@ -41,4 +41,10 @@ public class ReplyController {
         }
 
     }
+
+    @PostMapping("/like/{id}")
+    public ResponseEntity<Void> likeComment(@PathVariable("id") Long id,HttpServletRequest request){
+        service.likeReply(id,request);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

@@ -57,4 +57,10 @@ public class CommentController {
     public ResponseEntity<List<CommentDto>> getAllComments(){
         return ResponseEntity.status(HttpStatus.OK).body(service.getAllComments());
     }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<Void> likeComment(@PathVariable("id") Long id,HttpServletRequest request){
+        service.likeComment(id,request);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

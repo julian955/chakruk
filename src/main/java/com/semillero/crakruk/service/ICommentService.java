@@ -18,4 +18,6 @@ public interface ICommentService {
     CommentDto updateComment(Long id, CommentDto dto);
 
     List<CommentDto> getAllComments();
+
+    void likeComment(Long id,HttpServletRequest request);
 }

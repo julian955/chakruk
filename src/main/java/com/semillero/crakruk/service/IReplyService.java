@@ -19,4 +19,6 @@ public interface IReplyService {
     ReplyDto updateReply(Long id, ReplyDto dto);
 
     List<ReplyDto> getAllReply();
+
+    public void likeReply (Long id,HttpServletRequest request);
 }
