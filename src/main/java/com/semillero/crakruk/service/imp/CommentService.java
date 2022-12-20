@@ -78,13 +78,13 @@ public class CommentService implements ICommentService {
 
 
         int pageNumber = PaginationUtil.resolvePageNumber(page);
-        int maximumPageNumber = commentRepository.findAll().size() / 20;
+        int maximumPageNumber = commentRepository.findAll().size() / 5;
 
         if (pageNumber > maximumPageNumber) {
             throw new PaginationSizeOutOfBoundsException("error.pagination_size");
         }
 
-        Pageable pageable = PageRequest.of(pageNumber, 20);
+        Pageable pageable = PageRequest.of(pageNumber, 5);
 
         List<CommentDto> dtoList = mapper.toDtoList(commentRepository.findAll(pageable).toList());
         dtoList.forEach(x -> Collections.sort(x.getReply(), Comparator.comparing(ReplyDto::getCreated)));
