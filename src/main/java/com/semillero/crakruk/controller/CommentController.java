@@ -56,7 +56,10 @@ public class CommentController {
 
     @GetMapping
     public ResponseEntity<CommentPaginationDto> getAllComments(@RequestParam(required = false) Integer page){
-        return ResponseEntity.status(HttpStatus.OK).body(service.getAllComments(page));
+        if (service.getAllComments(page) != null){
+            return ResponseEntity.status(HttpStatus.OK).body(service.getAllComments(page));
+        }
+        return null;
     }
 
     @GetMapping("/popular")
