@@ -91,6 +91,9 @@ public class CommentService implements ICommentService {
         Collections.sort(dtoList, Comparator.comparing(CommentDto::getCreated).reversed());
 
 
+        if (dtoList.size() == 0) {
+            return null;
+        }
 
         return mapper.listNameDto(dtoList, PaginationUtil.getPreviousAndNextPage(pageNumber, maximumPageNumber));
     }
