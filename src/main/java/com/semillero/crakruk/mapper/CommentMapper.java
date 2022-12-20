@@ -1,14 +1,14 @@
 package com.semillero.crakruk.mapper;
 
 import com.semillero.crakruk.auth.model.UserModel;
-import com.semillero.crakruk.auth.repository.UserRepository;
 import com.semillero.crakruk.dto.CommentDto;
+import com.semillero.crakruk.dto.CommentPaginationDto;
+import com.semillero.crakruk.dto.PaginationUrlDto;
 import com.semillero.crakruk.mapper.util.IMapper;
 import com.semillero.crakruk.model.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.semillero.crakruk.mapper.util.MapperUtil.streamListNonNull;
@@ -74,4 +74,10 @@ public class CommentMapper implements IMapper<Comment, CommentDto> {
     public List<CommentDto> toDtoList(List<Comment> list) {
         return streamListNonNull(list, this::toDto);
     }
+
+    public CommentPaginationDto listNameDto(List<CommentDto> list, PaginationUrlDto dto) {
+        return new CommentPaginationDto(dto, list);
+    }
+
+
 }

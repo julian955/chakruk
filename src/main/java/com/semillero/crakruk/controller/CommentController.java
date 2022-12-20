@@ -4,6 +4,7 @@ import com.semillero.crakruk.auth.model.UserModel;
 import com.semillero.crakruk.auth.repository.UserRepository;
 import com.semillero.crakruk.auth.service.IUserService;
 import com.semillero.crakruk.dto.CommentDto;
+import com.semillero.crakruk.dto.CommentPaginationDto;
 import com.semillero.crakruk.exeption.EntityNotFoundException;
 import com.semillero.crakruk.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +55,13 @@ public class CommentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CommentDto>> getAllComments(){
-        return ResponseEntity.status(HttpStatus.OK).body(service.getAllComments());
+    public ResponseEntity<CommentPaginationDto> getAllComments(@RequestParam(required = false) Integer page){
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAllComments(page));
+    }
+
+    @GetMapping("/popular")
+    public ResponseEntity<List<CommentDto>> getPopularComments(){
+        return ResponseEntity.status(HttpStatus.OK).body(service.getPopularComments());
     }
 
     @PostMapping("/{id}")

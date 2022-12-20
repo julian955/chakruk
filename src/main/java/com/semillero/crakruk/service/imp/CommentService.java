@@ -4,17 +4,24 @@ import com.semillero.crakruk.auth.model.UserModel;
 import com.semillero.crakruk.auth.repository.UserRepository;
 import com.semillero.crakruk.auth.service.IUserService;
 import com.semillero.crakruk.dto.CommentDto;
+import com.semillero.crakruk.dto.CommentPaginationDto;
 import com.semillero.crakruk.dto.ReplyDto;
 import com.semillero.crakruk.exeption.EntityNotFoundException;
+import com.semillero.crakruk.exeption.NullListException;
+import com.semillero.crakruk.exeption.PaginationSizeOutOfBoundsException;
 import com.semillero.crakruk.mapper.CommentMapper;
 import com.semillero.crakruk.model.Comment;
 import com.semillero.crakruk.repository.CommentRepository;
 import com.semillero.crakruk.service.ICommentService;
+import com.semillero.crakruk.util.pagination.PaginationUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+
 import java.util.*;
 
 @AllArgsConstructor
@@ -67,11 +74,36 @@ public class CommentService implements ICommentService {
     }
 
     @Override
-    public List<CommentDto> getAllComments() {
-        List<CommentDto> dtoList = mapper.toDtoList(commentRepository.findAll());
+    public CommentPaginationDto getAllComments(Integer page) {
+
+
+        int pageNumber = PaginationUtil.resolvePageNumber(page);
+        int maximumPageNumber = commentRepository.findAll().size() / 20;
+
+        if (pageNumber > maximumPageNumber) {
+            throw new PaginationSizeOutOfBoundsException("error.pagination_size");
+        }
+
+        Pageable pageable = PageRequest.of(pageNumber, 20);
+
+        List<CommentDto> dtoList = mapper.toDtoList(commentRepository.findAll(pageable).toList());
         dtoList.forEach(x -> Collections.sort(x.getReply(), Comparator.comparing(ReplyDto::getCreated)));
         Collections.sort(dtoList, Comparator.comparing(CommentDto::getCreated).reversed());
-        return dtoList;
+
+
+        if (dtoList.size() == 0) {
+            throw new NullListException("error.null_list");
+        }
+
+        return mapper.listNameDto(dtoList, PaginationUtil.getPreviousAndNextPage(pageNumber, maximumPageNumber));
+    }
+
+    @Override
+    public List<CommentDto> getPopularComments() {
+        List<CommentDto> dtoList = mapper.toDtoList(commentRepository.findAll());
+        dtoList.forEach(x -> Collections.sort(x.getReply(), Comparator.comparing(ReplyDto::getCreated)));
+        Collections.sort(dtoList, Comparator.comparing(CommentDto::getLikes).thenComparing(x -> x.getReply().size()));
+        return dtoList.subList(0,10);
     }
 
     @Override
