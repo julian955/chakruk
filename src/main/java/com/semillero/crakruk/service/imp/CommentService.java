@@ -15,13 +15,13 @@ import com.semillero.crakruk.repository.CommentRepository;
 import com.semillero.crakruk.service.ICommentService;
 import com.semillero.crakruk.util.pagination.PaginationUtil;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @AllArgsConstructor
@@ -84,11 +84,9 @@ public class CommentService implements ICommentService {
             throw new PaginationSizeOutOfBoundsException("error.pagination_size");
         }
 
-        Pageable pageable = PageRequest.of(pageNumber, 5);
-
+        Pageable pageable = PageRequest.of(pageNumber, 5,Sort.by("created").descending());
         List<CommentDto> dtoList = mapper.toDtoList(commentRepository.findAll(pageable).toList());
         dtoList.forEach(x -> Collections.sort(x.getReply(), Comparator.comparing(ReplyDto::getCreated)));
-        Collections.sort(dtoList, Comparator.comparing(CommentDto::getCreated).reversed());
 
         return mapper.listNameDto(dtoList, PaginationUtil.getPreviousAndNextPage(pageNumber, maximumPageNumber));
     }
