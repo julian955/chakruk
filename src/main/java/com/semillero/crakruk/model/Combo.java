@@ -29,7 +29,7 @@ public class Combo {
     private String name;
     @ElementCollection(targetClass=String.class)
     private List<String> description;
-    private Double price;
+    private String price;
     private String image;
 
 

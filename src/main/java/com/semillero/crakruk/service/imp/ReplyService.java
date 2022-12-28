@@ -32,7 +32,7 @@ public class ReplyService implements IReplyService {
     @Transactional
     public ReplyDto createReply(ReplyDto dto , HttpServletRequest request,Long commentId) {
 
-        Comment comment = commentRepository.getById(commentId);
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new EntityNotFoundException("Comment", "id", commentId));
         UserModel user = userService.getUser(request);
         UserModel userReceiver = userService.getUserByUserName(dto.getUserReceiver());
         Reply reply = mapper.toEntity(dto,user);

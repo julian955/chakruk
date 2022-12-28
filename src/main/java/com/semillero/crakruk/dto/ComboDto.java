@@ -24,7 +24,7 @@ public class ComboDto {
     private List<String> description;
 
     @NotNull(message = "{error.empty_field}")
-    private Double price;
+    private String price;
 
     private String image;
 }
