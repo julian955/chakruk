@@ -11,7 +11,7 @@ RUN mvn dependency:go-offline -B
 COPY ./src ./src
 
 # build for release
-RUN mvn -DskipTests package
+RUN mvn -f pom.xml clean package
 
 # our final base image
 FROM openjdk:8u171-jre-alpine
