@@ -23,4 +23,4 @@ WORKDIR /appdocker
 
 RUN mkdir -p /app/logs /app/app /app/config /app/dist
 
-ENTRYPOINT ["java","-jar","/app/dist/api.jar"]
+ENTRYPOINT ["java","-jar","/src/deploy/test.jar"]
