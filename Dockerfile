@@ -17,6 +17,10 @@ RUN mvn -f pom.xml clean package
 FROM openjdk:17
 
 # copy over the built artifact from the maven image
-COPY --from=maven ./target/crakruk-0.0.1-SNAPSHOT.jar /app
+COPY --from=maven ./target/crakruk-0.0.1-SNAPSHOT.jar /tmp
+
+WORKDIR /tmp
+
+RUN mkdir -p /app/logs /app/app /app/config /app/dist
 
 ENTRYPOINT ["java","-jar","crakruk-0.0.1-SNAPSHOT.jar"]
