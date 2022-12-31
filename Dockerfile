@@ -17,8 +17,6 @@ RUN mvn -f pom.xml clean package
 FROM openjdk:17
 
 # copy over the built artifact from the maven image
-COPY --from=maven ./target/crakruk-0.0.1-SNAPSHOT.jar /appdocker
-
-WORKDIR /appdocker
+COPY --from=maven ./target/crakruk-0.0.1-SNAPSHOT.jar /app
 
 ENTRYPOINT ["java","-jar","crakruk-0.0.1-SNAPSHOT.jar"]
