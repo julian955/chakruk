@@ -9,6 +9,7 @@ import com.semillero.crakruk.model.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.semillero.crakruk.mapper.util.MapperUtil.streamListNonNull;
@@ -51,6 +52,8 @@ public class CommentMapper implements IMapper<Comment, CommentDto> {
 
     @Override
     public CommentDto toDto(Comment entity) {
+        ArrayList<String> likesUser = new ArrayList<>();
+        entity.getLike().forEach(x -> likesUser.add(x.getUser()));
 
         return CommentDto.builder()
                 .id(entity.getId())
@@ -60,6 +63,7 @@ public class CommentMapper implements IMapper<Comment, CommentDto> {
                 .body(entity.getBody())
                 .likes(entity.getLike().size())
                 .reply(mapper.toDtoList(entity.getReply()))
+                .UsersLike(likesUser)
                 .created(entity.getUpdated())
                 .build();
     }

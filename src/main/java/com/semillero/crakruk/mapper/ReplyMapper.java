@@ -7,6 +7,7 @@ import com.semillero.crakruk.mapper.util.IMapper;
 import com.semillero.crakruk.model.Reply;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.semillero.crakruk.mapper.util.MapperUtil.streamListNonNull;
@@ -33,6 +34,8 @@ public class ReplyMapper implements IMapper<Reply, ReplyDto> {
 
     @Override
     public ReplyDto toDto(Reply entity) {
+        ArrayList<String> likesUser = new ArrayList<>();
+        entity.getLike().forEach(x -> likesUser.add(x.getUser()));
         return ReplyDto.builder()
                 .id(entity.getId())
                 .userName(entity.getUser().getUser())
@@ -40,6 +43,7 @@ public class ReplyMapper implements IMapper<Reply, ReplyDto> {
                 .userReceiver(entity.getReceiver().getUser())
                 .body(entity.getBody())
                 .likes(entity.getLike().size())
+                .UsersLike(likesUser)
                 .created(entity.getUpdated())
                 .build();
     }

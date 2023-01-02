@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -27,6 +28,8 @@ public class ReplyDto {
     private String body;
 
     private Integer likes;
+
+    private List<String> UsersLike;
 
     private LocalDateTime created;
 }

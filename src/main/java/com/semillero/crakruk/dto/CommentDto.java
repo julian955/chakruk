@@ -35,5 +35,7 @@ public class CommentDto {
 
     private List<ReplyDto> reply;
 
+    private List<String> UsersLike;
+
     private LocalDateTime created;
 }
