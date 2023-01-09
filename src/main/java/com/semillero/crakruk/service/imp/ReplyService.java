@@ -85,7 +85,10 @@ public class ReplyService implements IReplyService {
         Reply reply = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Reply", "id", id));
         if (!(reply.getLike().contains(user))){
             reply.addLike(user);
+        }else{
+            reply.getLike().remove(user);
         }
+
         repository.save(reply);
     }
 }

@@ -105,6 +105,8 @@ public class CommentService implements ICommentService {
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Comment", "id", id));
         if (!(comment.getLike().contains(user))){
             comment.addLike(user);
+        }else {
+            comment.getLike().remove(user);
         }
         commentRepository.save(comment);
     }
