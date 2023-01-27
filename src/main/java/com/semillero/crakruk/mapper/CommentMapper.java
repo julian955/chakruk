@@ -54,6 +54,14 @@ public class CommentMapper implements IMapper<Comment, CommentDto> {
     public CommentDto toDto(Comment entity) {
         ArrayList<String> likesUser = new ArrayList<>();
         entity.getLike().forEach(x -> likesUser.add(x.getUser()));
+        Integer interactions;
+
+        if (entity.getReply() == null){
+             interactions = entity.getLike().size();
+        }else {
+             interactions = entity.getLike().size()+entity.getReply().size();
+        }
+
 
         return CommentDto.builder()
                 .id(entity.getId())
@@ -65,6 +73,7 @@ public class CommentMapper implements IMapper<Comment, CommentDto> {
                 .reply(mapper.toDtoList(entity.getReply()))
                 .UsersLike(likesUser)
                 .created(entity.getUpdated())
+                .interactions(interactions)
                 .build();
     }
 

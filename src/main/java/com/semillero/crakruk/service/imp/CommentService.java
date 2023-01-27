@@ -95,8 +95,13 @@ public class CommentService implements ICommentService {
     public List<CommentDto> getPopularComments() {
         List<CommentDto> dtoList = mapper.toDtoList(commentRepository.findAll());
         dtoList.forEach(x -> Collections.sort(x.getReply(), Comparator.comparing(ReplyDto::getCreated)));
-        Collections.sort(dtoList, Comparator.comparing(CommentDto::getLikes).thenComparing(x -> x.getReply().size()));
-        return dtoList.subList(0,10);
+
+        Collections.sort(dtoList, Comparator.comparing(CommentDto::getInteractions).reversed());
+
+        if (dtoList.size() > 6){
+            return dtoList.subList(0,6);
+        }
+        return dtoList;
     }
 
     @Override

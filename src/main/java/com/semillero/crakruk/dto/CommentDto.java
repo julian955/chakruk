@@ -38,4 +38,6 @@ public class CommentDto {
     private List<String> UsersLike;
 
     private LocalDateTime created;
+
+    private Integer interactions;
 }
